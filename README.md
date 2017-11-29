@@ -8,7 +8,7 @@ consistently more optimistic (pessimistic) than their peers over time.
 
 ### Example Usage
 
-**The Disagreement_Data.py File**
+#### The Disagreement_Data.py File
 To see how disagreement among forecasters is related to future volatility,
 controling for time-varying risk-aversion, one can do the following:
 
@@ -28,7 +28,7 @@ of realized volatility, based on an ARMA(1,1) regression. I use ``disagreement`
 and `risk` as exogeneous variables and calculate regression estimates with
 ``disagreement.regression``.
 
-**The Survey_Data.py File**
+#### The Survey_Data.py File
 How forecaters switch beliefs can be studied with the file ``Survey_Data.py``.
 
 ```
