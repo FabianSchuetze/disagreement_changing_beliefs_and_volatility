@@ -43,7 +43,7 @@ survey = survey_data(wd)
 transitions = survey.transition_probabilities(4)
 print(transitions)
 ```
-The function ``survey.transistion_probabilities(4)`` calculates the
-probabiliyty that a forecasters switches beliefs at least once over 4 periods.
+The function ``survey.transistion_probabilities(4)`` calculates the probability
+that a forecaster switches beliefs at least once over 4 periods.
 
 ### Data Sources
