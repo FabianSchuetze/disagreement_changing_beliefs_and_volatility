@@ -15,3 +15,5 @@ install:
         - conda install pandas 
         - conda install numpy 
         - conda install statsmodels
+script: 
+        - python test_script.py
