@@ -18,13 +18,17 @@ To see how disagreement among forecasters is related to future volatility,
 controlling for time-varying risk-aversion, one can do the following:
 
 ```
+print('EXAMPLE 1:')
 from Disagreement_Data import disagreement_data
-wd = '/home/fabian/Documents/texts/Disagreement/Data/'
+import os
+cwd = os.getcwd()
+wd = os.path.join(cwd, '../Data/')
 disagreement = disagreement_data(wd)
 survey, summary = disagreement.data(method='arma')
 independent = ['disagreement', 'risk']
 regression_output = disagreement.regression(summary, 'vol', independent)
 regression_output.summary()
+print(regression_output.summary())
 ```
 The string ``wd`` specifies the path to the folder with the data. The code
 above loads first the ``pd.DataFrame`` ``summary`` containing all relevant
@@ -40,8 +44,11 @@ results of regressing ``vol`` on ``risk`` and ``disagreement`` are stored in
 How forecaters switch beliefs can be studied with the file ``Survey_Data.py``.
 
 ```
+print('EXAMPLE 2:')
 from Survey_Data import survey_data
-wd = '/home/fabian/Documents/texts/Disagreement/Data/'
+import os
+cwd = os.getcwd()
+wd = os.path.join(cwd, '../Data/')
 survey = survey_data(wd)
 transitions = survey.transition_probabilities(4)
 print(transitions)
