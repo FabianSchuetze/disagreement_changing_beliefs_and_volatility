@@ -1,16 +1,18 @@
 # Disagreement, Changing Beliefs and Stock Market Volatility
 
-The Github folder contains the data used in the paper "Disagreement, Changing
-Beliefs and Stock Market Volatility". The data can be used for two things.
-First, to describe the relationship between disagreement, stock market
-volatlity and excess returns. Second, one can study whether forecasters remain
-consistently more optimistic (pessimistic) than their peers over time.
+The Github folder contains the data used in the paper [Disagreement, Changing
+Beliefs and Stock Market
+Volatility](https://www.dropbox.com/s/bl4slvzkloi911s/jmp.pdf?dl=0&m=). The
+data can be used for two things.  First, to describe the relationship between
+disagreement, stock market volatlity and excess returns. Second, one can study
+whether forecasters remain consistently more optimistic (pessimistic) than
+their peers over time.
 
 ### Example Usage
 
 #### The Disagreement_Data.py File
 To see how disagreement among forecasters is related to future volatility,
-controling for time-varying risk-aversion, one can do the following:
+controlling for time-varying risk-aversion, one can do the following:
 
 ```
 from Disagreement_Data import disagreement_data
@@ -21,12 +23,15 @@ independent = ['disagreement', 'risk']
 regression_output = disagreement.regression(summary, 'vol', independent)
 regression_output.summary()
 ```
-The string ``wd`` specifices the path to the folder with the data.  The code
-above loads the first ``summary`` data containing all relevant variables.
-Several measures of volatility are available, I use here the predicted values
-of realized volatility, based on an ARMA(1,1) regression. I use ``disagreement`
-and `risk` as exogeneous variables and calculate regression estimates with
-``disagreement.regression``.
+The string ``wd`` specifies the path to the folder with the data. The code
+above loads first the ``pd.DataFrame`` ``summary`` containing all relevant
+variables. Several parameters for the function ``data`` can be used each
+specify how raw volatility shall be filtered. The methods are described in the
+docstring of ``data``. To compute how ``disagreement`` relates to
+``volatility`` in financial markets one can use several control variables. In
+the example, a measure of time-varying risk aversion ``risk`` is used. The
+results of regressing ``vol`` on ``risk`` and ``disagreement`` are stored in
+``regression_output``.
 
 #### The Survey_Data.py File
 How forecaters switch beliefs can be studied with the file ``Survey_Data.py``.
@@ -36,8 +41,9 @@ from Survey_Data import survey_data
 wd = '/home/fabian/Documents/texts/Disagreement/Data/'
 survey = survey_data(wd)
 transitions = survey.transition_probabilities(4)
+print(transitions)
 ```
-The function ``survey.transistion_probabilities(4)``` calculates the
+The function ``survey.transistion_probabilities(4)`` calculates the
 probabiliyty that a forecasters switches beliefs at least once over 4 periods.
 
 ### Data Sources

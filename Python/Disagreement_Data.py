@@ -40,6 +40,15 @@ class disagreement_data(object):
         index at the time to which it refers to, not with the time the
         forecasts or estiamtes were actually made.
 
+        Parameters:
+        -----------
+
+        method: string
+            How to filter raw volatility. Available input is `gallant` for
+            removal of seasonsal and determinstic trends in volatility as in
+            XX. `ar` (`arma`) to compute predicted values of an AR(1) (ARMA(1,1))
+            process. The empty string ` ` to use raw volatility.
+
         returns:
         -------
         survey: pd.DataFrame(float):
