@@ -1,3 +1,6 @@
+[![Build
+Status](https://travis-ci.org/FabianSchuetze/disagreement_changing_beliefs_and_volatility.svg?branch=master)](https://travis-ci.org/FabianSchuetze/disagreement_changing_beliefs_and_volatility)
+
 # Disagreement, Changing Beliefs and Stock Market Volatility
 
 The Github folder contains the data used in the paper [Disagreement, Changing
