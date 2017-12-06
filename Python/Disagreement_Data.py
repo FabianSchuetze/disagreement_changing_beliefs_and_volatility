@@ -407,6 +407,34 @@ class disagreement_data(object):
         res = sm.ols(formula=formula, data=df).fit()
         return res.fittedvalues
 
+    def Sorting_Returns_Disagreement(self, df):
+        """
+        This function sorts excess returns according to disagreement. The
+        functions is included to make the results comparable to the empirical
+        literature, for example Dieter, Malloy, and Scherbina (2002)
+
+        Returns:
+        ---------
+
+        sorted_data: pd.DataFrame:
+            The dataframe contains ten groups with mean disagreement and
+            ExcessReturns
+        """
+        labels = ['disagreement', 'ExcessReturn']
+        df = df[labels].copy(deep=True)
+        df = df.sort_values('disagreement')
+        groups = [i for i in range(1, 11)] # ten groups
+        sorted_data = pd.DataFrame(index=groups, columns=labels)
+        number_of_elements = len(df) // 10
+        for i in groups:
+            low = (i-1)*number_of_elements
+            high = i * number_of_elements
+            mean_disagreement = df.iloc[low:high, :].mean()['disagreement']
+            mean_returns = df.iloc[low:high, :].mean()['ExcessReturn']
+            sorted_data.loc[i, 'disagreement'] = mean_disagreement
+            sorted_data.loc[i, 'ExcessReturn'] = mean_returns
+        return sorted_data
+
     def plots(self, df, Series, ax, ylabel=''):
         """
         This function returns contains for the relevant plots
@@ -448,4 +476,4 @@ class disagreement_data(object):
 if __name__ == '__main__':
     wd = '/home/fabian/Documents/Eigene Text/NeuralNetworks_Publication/Data/'
     store = disagreement_data(wd=wd)
-    survey, summary = store.data(method = 'arma')
+    survey, summary = store.data(method = '')
