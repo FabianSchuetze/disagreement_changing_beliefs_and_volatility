@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 import statsmodels.tsa.api as tsa
 import statsmodels.formula.api as sm
+import statsmodels.api as sm_filters
 import matplotlib.pyplot as plt
 plt.close('all')
 
@@ -95,10 +96,12 @@ class disagreement_data(object):
         summary['risk'] = self._time_varying_risk(summary)
 
         ## == Recession and GDP == ##
+        # import pdb; pdb.set_trace()
         quarterly = [recession.index.year, recession.index.quarter]
         recession = recession.groupby(quarterly).mean()
         summary['recession'] = recession.set_index(summary.index)
-        summary['gdp'] = gdp.set_index(summary.index)
+        _, trend = sm_filters.tsa.filters.hpfilter(gdp)
+        summary['gdp'] = trend.set_index(summary.index)
         summary['gdp_vol'] = self._gdp_vol_estimate(summary)
 
         summary.drop(['P', 'D', 'CPI'], axis=1, inplace=True)
@@ -291,13 +294,24 @@ class disagreement_data(object):
 
     def _gdp_vol_estimate(self, variables):
         """
-        This function estimates conditional volatilities of GDP 
-        growth
+        This function estimates long-run volatilities of GDP growht. To esimate
+        such long-run volatility, I use a 2-sided rolling window to filter raw
+        volatility.
+
+        Returns:
+        --------
+
+        rolling_vol: pd.Series(float)
+            The rolling estimate of volatility
         """
         raw_vol = tsa.ARMA(variables['gdp'], order=(1, 0)).fit(disp=False).resid
         abs_vol = np.abs(raw_vol)
-        filtered_vol = tsa.ARMA(abs_vol, order=(1, 0)).fit(disp=False)
-        return filtered_vol.fittedvalues
+        cycle, trend = sm_filters.tsa.filters.hpfilter(abs_vol)
+        return trend
+        # rolling_vol = abs_vol.rolling(window=5, center=True).mean()
+        # # filtered_vol = tsa.ARMA(abs_vol, order=(1, 0)).fit(disp=False)
+        # return rolling_vol
+        # return filtered_vol.fittedvalues
 
     def _transform_arma(self, variables, order):
         """
@@ -476,4 +490,4 @@ class disagreement_data(object):
 if __name__ == '__main__':
     wd = '/home/fabian/Documents/Eigene Text/NeuralNetworks_Publication/Data/'
     store = disagreement_data(wd=wd)
-    survey, summary = store.data(method = '')
+    survey, summary = store.data(method = 'arma')

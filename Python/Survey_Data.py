@@ -232,7 +232,7 @@ class survey_data(object):
 
 if __name__ == '__main__':
     wd = '/home/fabian/Documents/Eigene Text/NeuralNetworks_Publication/Data/'
-    store = Survey_data(wd=wd)
+    store = survey_data(wd=wd)
     ## == Obtain Data about the Transition Probabilities ##
     transitions = store.transition_probabilities(4)
     fig, ax = plt.subplots()
